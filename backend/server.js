@@ -15,13 +15,13 @@ app.use(express.json());
 connectDB();
 
 // // Routes (we’ll add later)
-// import blogRoutes from "./routes/blogRoutes.js";
-// import jobRoutes from "./routes/jobRoutes.js";
-// import adminRoutes from "./routes/adminRoutes.js";
+import blogRoutes from "./routes/blogRoutes.js";
+import jobRoutes from "./routes/jobRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
-// app.use("/api/blogs", blogRoutes);
-// app.use("/api/jobs", jobRoutes);
-// app.use("/api/admin", adminRoutes);
+app.use("/api/blogs", blogRoutes);
+app.use("/api/jobs", jobRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Root
 app.get("/", (req, res) => {
