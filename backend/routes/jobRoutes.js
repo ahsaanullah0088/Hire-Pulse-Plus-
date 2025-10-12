@@ -1,5 +1,5 @@
 import express from "express";
-import { createJob, getAllJobs, getJobById } from "../controllers/jobController.js";
+import { createJob, getAllJobs, getJobById , updateJob , deleteJob } from "../controllers/jobController.js";
 import protect from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -10,5 +10,9 @@ router.get("/:id", getJobById);
 
 // Admin-only Route
 router.post("/", protect, createJob);
+// Admin-only Routes
+router.put("/:id", protect, updateJob);   // Update job
+router.delete("/:id", protect, deleteJob); // Delete job
+
 
 export default router;

@@ -38,3 +38,41 @@ export const getJobById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// @desc Update a job
+export const updateJob = async (req, res) => {
+  try {
+    const { title, hrEmail, applyLink, description } = req.body;
+
+    const job = await Job.findById(req.params.id);
+    if (!job) return res.status(404).json({ message: "Job not found" });
+
+    // Update fields
+    job.title = title || job.title;
+    job.hrEmail = hrEmail || job.hrEmail;
+    job.applyLink = applyLink || job.applyLink;
+    job.description = description || job.description;
+    const updatedJob = await job.save();
+    res.status(200).json(updatedJob);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc Delete a job
+// @desc Delete a job
+export const deleteJob = async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id);
+    if (!job) return res.status(404).json({ message: "Job not found" });
+
+    // Use deleteOne or findByIdAndDelete
+    await Job.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({ message: "Job deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
