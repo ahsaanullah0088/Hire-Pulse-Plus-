@@ -5,22 +5,18 @@ import { Briefcase, FileText, List, LayoutDashboard } from "lucide-react";
 
 const Sidebar = () => {
   const links = [
-    { name: "Post Job", icon: <Briefcase size={20} />, path: "/create-job" },
-    { name: "Post Blog", icon: <FileText size={20} />, path: "/create-blog" },
-    { name: "All Jobs", icon: <List size={20} />, path: "/all-jobs" },
-    { name: "All Blogs", icon: <LayoutDashboard size={20} />, path: "/all-blogs" },
+    { name: "Post Job", icon: <Briefcase size={20} />, path: "/admin-dashboard/create-job" },
+    { name: "Post Blog", icon: <FileText size={20} />, path: "/admin-dashboard/create-blog" },
+    { name: "All Jobs", icon: <List size={20} />, path: "/admin-dashboard/all-jobs" },
+    { name: "All Blogs", icon: <LayoutDashboard size={20} />, path: "/admin-dashboard/all-blogs" },
   ];
 
   return (
     <div className="h-screen w-64 bg-gray-900 text-white flex flex-col shadow-lg">
       {/* Logo Section */}
       <div className="flex flex-col items-center justify-center py-6 border-b border-gray-800">
-        <img
-          src="/logo.png" // logo from public folder
-          alt="HirePulsePlus Logo"
-          className="w-14 h-14 object-contain mb-2"
-        />
-        <h1 className="text-xl font-semibold tracking-wide">HirePulse+</h1>
+        
+        <h1 className="text-xl font-semibold tracking-wide">Dashboard</h1>
       </div>
 
       {/* Navigation Links */}
