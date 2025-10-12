@@ -1,10 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit';
-import blogReducer from './blogSlice.js';
-import jobReducer from './jobSlice.js';
+// src/redux/store.js
+import { configureStore } from "@reduxjs/toolkit";
+import jobReducer from "./jobSlice";
+import blogReducer from "./blogSlice";
+import authReducer from "./authSlice";
 
 export const store = configureStore({
   reducer: {
-    blogs: blogReducer,
     jobs: jobReducer,
+    blogs: blogReducer,
+    auth: authReducer,
   },
 });
