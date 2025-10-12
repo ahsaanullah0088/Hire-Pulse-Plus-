@@ -27,7 +27,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-8">
           <ul className="flex font-medium items-center gap-6">
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/jobs">Jobs</Link></li>
+            <li><Link to="/allUserJobs">Jobs</Link></li>
             <li><Link to="/browse">Browse</Link></li>
             <li><Link to="/blogs">Blogs</Link></li>
 

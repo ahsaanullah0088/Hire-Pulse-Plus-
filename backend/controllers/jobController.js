@@ -21,7 +21,22 @@ export const createJob = async (req, res) => {
 // @desc Get all jobs
 export const getAllJobs = async (req, res) => {
   try {
-    const jobs = await Job.find().sort({ createdAt: -1 });
+    const searchQuery = req.query.search || ""; // ?search=frontend
+    let jobs;
+
+    if (searchQuery) {
+      const regex = new RegExp(searchQuery, "i"); // case-insensitive
+      jobs = await Job.find({
+        $or: [
+          { title: { $regex: regex } },
+          { description: { $regex: regex } },
+          { company: { $regex: regex } }
+        ]
+      }).sort({ createdAt: -1 });
+    } else {
+      jobs = await Job.find().sort({ createdAt: -1 });
+    }
+
     res.status(200).json(jobs);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -75,4 +90,12 @@ export const deleteJob = async (req, res) => {
   }
 };
 
+export const getRecentJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find().sort({ createdAt: -1 }).limit(6);
+    res.status(200).json(jobs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
