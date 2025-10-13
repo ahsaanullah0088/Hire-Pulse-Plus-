@@ -5,7 +5,7 @@ import cloudinary from "../utils/cloudinary.js";
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "job-portal-blogs", // Folder name in Cloudinary
+    folder: "job-portal-blogs",
     allowed_formats: ["jpg", "jpeg", "png"],
   },
 });

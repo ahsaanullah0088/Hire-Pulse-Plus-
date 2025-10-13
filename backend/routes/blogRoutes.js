@@ -5,11 +5,8 @@ import protect from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// Public Routes
 router.get("/", getAllBlogs);
 router.get("/:id", getBlogById);
-
-// Admin-only Route
 router.post("/", protect, upload.single("image"), createBlog);
 
 export default router;
