@@ -6,19 +6,26 @@ export const createBlog = async (req, res) => {
   try {
     const { title, shortDescription, longDescription } = req.body;
 
-    if (!req.file) return res.status(400).json({ message: "Image required" });
+    if (!req.file) {
+      return res.status(400).json({ message: "Image required" });
+    }
 
-    const result = await cloudinary.uploader.upload(req.file.path);
+    // ✅ Upload image to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "blogs",
+    });
 
+    // ✅ Save blog with Cloudinary URL
     const blog = await Blog.create({
       title,
-      image: result.secure_url,
+      image: result.secure_url, // Cloudinary image URL
       shortDescription,
       longDescription,
     });
 
     res.status(201).json(blog);
   } catch (error) {
+    console.error("Error creating blog:", error);
     res.status(500).json({ message: error.message });
   }
 };
