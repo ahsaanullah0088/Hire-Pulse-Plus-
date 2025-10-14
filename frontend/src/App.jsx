@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/common/Navbar";
-import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Home from "./pages/Home/Home";
 import AdminLogin from "./pages/auth/AdminLogin";
@@ -9,12 +8,15 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminDashboard from "./pages/Dashboard/adminDashboard";
 import CreateJob from "./pages/Dashboard/CreateJob";
 import CreateBlog from "./pages/Dashboard/CreateBlog";
-import AllJobs from "./pages/Dashboard/AllJobs"; // Admin's job page
+import AllJobs from "./pages/Dashboard/AllJobs";
 import AllBlogs from "./pages/Dashboard/AllBlogs";
+
 // User Pages
-import Browse from "./pages/Jobs/Browse"; // User browse/search page
-import AllJobsUser from "./pages/Jobs/Jobs"; // User all jobs page
+import Browse from "./pages/Jobs/Browse";
+import AllJobsUser from "./pages/Jobs/Jobs";
 import JobDetail from "./pages/Jobs/JobDetail";
+import BlogDetails from "./pages/Blog/BlogDetails";
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -22,13 +24,16 @@ const App = () => {
       <Routes>
         {/* --- Public/User Routes --- */}
         <Route path="/" element={<Home />} />
-        <Route path="/allUserJobs" element={<AllJobsUser />} /> {/* User sees all jobs */}
-        <Route path="/browse" element={<Browse />} /> {/* Search results */}
+        <Route path="/allUserJobs" element={<AllJobsUser />} />
+        <Route path="/browse" element={<Browse />} />
         <Route path="/job/:id" element={<JobDetail />} />
 
-        <Route path="/admin-login" element={<AdminLogin />} />
+      
+        <Route path="/blogs" element={<AllBlogs />} />
+        <Route path="/blogs/:id" element={<BlogDetails />} />
 
-        {/* --- Admin Dashboard --- */}
+        {/* --- Admin Routes --- */}
+        <Route path="/admin-login" element={<AdminLogin />} />
         <Route
           path="/admin-dashboard"
           element={
@@ -40,7 +45,7 @@ const App = () => {
           <Route index element={<CreateJob />} />
           <Route path="create-job" element={<CreateJob />} />
           <Route path="create-blog" element={<CreateBlog />} />
-          <Route path="all-jobs" element={<AllJobs />} /> {/* Admin sees all jobs */}
+          <Route path="all-jobs" element={<AllJobs />} />
           <Route path="all-blogs" element={<AllBlogs />} />
         </Route>
       </Routes>

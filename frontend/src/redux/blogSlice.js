@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import API from "../utils/axiosInstance.js";
 
-/* -------------------- 🔹 FETCH ALL BLOGS -------------------- */
+/* 🔹 Fetch All Blogs */
 export const fetchBlogs = createAsyncThunk(
   "blogs/fetchAll",
   async (_, { rejectWithValue }) => {
@@ -14,7 +14,22 @@ export const fetchBlogs = createAsyncThunk(
   }
 );
 
-/* -------------------- 🔹 CREATE BLOG (Admin Only) -------------------- */
+/* 🔹 Fetch Limited (3) Blogs */
+export const fetchLimitedBlogs = createAsyncThunk(
+  "blogs/fetchLimited",
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await API.get("/blogs/limited");
+;
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || { message: err.message });
+    }
+  }
+);
+
+
+/* 🔹 Create Blog (Admin Only) */
 export const createBlog = createAsyncThunk(
   "blogs/create",
   async (blogData, { rejectWithValue }) => {
@@ -30,50 +45,17 @@ export const createBlog = createAsyncThunk(
   }
 );
 
-/* -------------------- 🔹 UPDATE BLOG (Admin Only) -------------------- */
-export const updateBlog = createAsyncThunk(
-  "blogs/update",
-  async ({ id, blogData }, { rejectWithValue }) => {
-    try {
-      const token = localStorage.getItem("token");
-      const { data } = await API.put(`/blogs/${id}`, blogData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return data;
-    } catch (err) {
-      return rejectWithValue(err.response?.data || { message: err.message });
-    }
-  }
-);
-
-/* -------------------- 🔹 DELETE BLOG (Admin Only) -------------------- */
-export const deleteBlog = createAsyncThunk(
-  "blogs/delete",
-  async (id, { rejectWithValue }) => {
-    try {
-      const token = localStorage.getItem("token");
-      await API.delete(`/blogs/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return id;
-    } catch (err) {
-      return rejectWithValue(err.response?.data || { message: err.message });
-    }
-  }
-);
-
-/* -------------------- 🔹 SLICE -------------------- */
 const blogSlice = createSlice({
   name: "blogs",
   initialState: {
     blogs: [],
+    limitedBlogs: [],
     loading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      /* 🟢 FETCH BLOGS */
       .addCase(fetchBlogs.pending, (state) => {
         state.loading = true;
       })
@@ -85,31 +67,11 @@ const blogSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
-      /* 🟢 CREATE BLOG */
-      .addCase(createBlog.pending, (state) => {
-        state.loading = true;
+      .addCase(fetchLimitedBlogs.fulfilled, (state, action) => {
+        state.limitedBlogs = action.payload;
       })
       .addCase(createBlog.fulfilled, (state, action) => {
-        state.loading = false;
         state.blogs.push(action.payload);
-      })
-      .addCase(createBlog.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-
-      /* 🟢 UPDATE BLOG */
-      .addCase(updateBlog.fulfilled, (state, action) => {
-        const index = state.blogs.findIndex(
-          (blog) => blog._id === action.payload._id
-        );
-        if (index !== -1) state.blogs[index] = action.payload;
-      })
-
-      /* 🟢 DELETE BLOG */
-      .addCase(deleteBlog.fulfilled, (state, action) => {
-        state.blogs = state.blogs.filter((blog) => blog._id !== action.payload);
       });
   },
 });

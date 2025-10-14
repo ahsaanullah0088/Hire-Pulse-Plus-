@@ -1,7 +1,7 @@
 import Blog from "../models/Blog.js";
 import cloudinary from "../utils/cloudinary.js";
 
-// @desc Create a new blog
+// ✅ Create a new blog
 export const createBlog = async (req, res) => {
   try {
     const { title, shortDescription, longDescription } = req.body;
@@ -10,15 +10,14 @@ export const createBlog = async (req, res) => {
       return res.status(400).json({ message: "Image required" });
     }
 
-    // ✅ Upload image to Cloudinary
+    // Upload to Cloudinary
     const result = await cloudinary.uploader.upload(req.file.path, {
       folder: "blogs",
     });
 
-    // ✅ Save blog with Cloudinary URL
     const blog = await Blog.create({
       title,
-      image: result.secure_url, // Cloudinary image URL
+      image: result.secure_url,
       shortDescription,
       longDescription,
     });
@@ -30,7 +29,7 @@ export const createBlog = async (req, res) => {
   }
 };
 
-// @desc Get all blogs
+// ✅ Get all blogs
 export const getAllBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ createdAt: -1 });
@@ -40,7 +39,17 @@ export const getAllBlogs = async (req, res) => {
   }
 };
 
-// @desc Get single blog by ID
+// ✅ Get only 3 latest blogs (for homepage)
+export const getLimitedBlogs = async (req, res) => {
+  try {
+    const blogs = await Blog.find().sort({ createdAt: -1 }).limit(3);
+    res.status(200).json(blogs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// ✅ Get single blog by ID
 export const getBlogById = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
