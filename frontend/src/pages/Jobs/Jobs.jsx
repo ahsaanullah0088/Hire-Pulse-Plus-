@@ -38,7 +38,7 @@ const AllJobsUser = () => {
   }
 
   return (
-    <section className="py-16 bg-gray-50 min-h-screen">
+    <section className="py-16 bg-gray-50=== min-h-screen">
       <div className="max-w-7xl mx-auto px-6">
         {/* --- Section Heading --- */}
         <h2 className="text-3xl font-bold text-gray-900 text-center mb-10">

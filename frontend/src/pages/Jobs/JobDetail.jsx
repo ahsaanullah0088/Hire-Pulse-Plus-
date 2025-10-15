@@ -63,13 +63,9 @@ const JobDetail = () => {
           </a>
 
           <h3 className="text-lg font-semibold mb-1">Apply Link:</h3>
-          <a
-            href={job.applyLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 inline-block"
-          >
-            Apply Now
+          <a href={job.applyLink} className="text-blue-600 underline">
+          
+            {job.applyLink}
           </a>
         </div>
       </div>
